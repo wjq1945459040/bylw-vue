@@ -1,5 +1,5 @@
 {
-  "name": "vue-manage-system",
+  "name": "wjq-web",
   "version": "4.2.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
     "axios": "^0.24.0",
     "babel-polyfill": "^6.26.0",
     "element-plus": "^1.2.0-beta.6",
-    "element-ui": "^2.11.0",
+    "element-ui": "^2.15.6",
     "mavon-editor": "^2.6.17",
     "moment": "^2.29.1",
     "vue": "^2.6.10",
