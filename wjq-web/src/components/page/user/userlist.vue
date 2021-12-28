@@ -146,16 +146,18 @@ export default {
       }
       return moment(date).format('YYYY-MM-DD HH:mm') // 这里可修改的格式
     },
+    //用户状态渲染
     onLineStatus (row, column) {
       let sta = row[column.property];
       if (sta === undefined) {
         return '';
       }
-      console.log(sta);
-
+      console.log("sta: " + sta);
       for (let i = 0; i < this.state.length; i++) {
-        console.log(this.state[i]);
-        if (this.state[i].value === sta) {
+        console.log("value" + this.state[i].value);
+        let value = this.state[i].value;
+        if (sta === value) {
+          console.log(this.state[i].text);
           return this.state[i].text;
         }
       }
@@ -173,12 +175,14 @@ export default {
         this.pageTotal = res.data.data.total;
       });
     },
+    //获取权限
     getAuthority () {
       const _this = this;
       _this.$axios.post('/getAuthority').then(res => {
         this.auths = res.data.data;
       });
     },
+    //获取用户状态
     getUserStatus () {
       const _this = this;
       _this.$axios.post('/getUserStatus').then(res => {
@@ -226,6 +230,7 @@ export default {
     handleSelectionChange (val) {
       this.multipleSelection = val;
     },
+    //多选删除
     delAllSelection () {
       this.$confirm('确定要删除吗？', '提示', {
         type: 'warning'

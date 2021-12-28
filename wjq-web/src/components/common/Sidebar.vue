@@ -44,13 +44,13 @@ export default {
         },
         {
           icon: 'el-icon-lx-cascades',
-          index: 'table',
-          title: '基础表格'
+          index: 'userlist',
+          title: '用户列表'
         },
         {
           icon: 'el-icon-lx-cascades',
-          index: 'userlist',
-          title: '用户列表'
+          index: 'usermaintain',
+          title: '个人信息维护'
         },
         {
           icon: 'el-icon-lx-copy',
@@ -95,26 +95,6 @@ export default {
           icon: 'el-icon-pie-chart',
           index: 'charts',
           title: 'schart图表'
-        },
-        {
-          icon: 'el-icon-rank',
-          index: '6',
-          title: '拖拽组件',
-          subs: [
-            {
-              index: 'drag',
-              title: '拖拽列表'
-            },
-            {
-              index: 'dialog',
-              title: '拖拽弹框'
-            }
-          ]
-        },
-        {
-          icon: 'el-icon-lx-global',
-          index: 'i18n',
-          title: '国际化功能'
         },
         {
           icon: 'el-icon-lx-warn',

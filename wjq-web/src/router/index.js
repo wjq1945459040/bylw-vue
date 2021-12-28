@@ -73,18 +73,6 @@ export default new Router({
           meta: { title: '拖拽列表', requireAuth: true }
         },
         {
-          // 拖拽Dialog组件
-          path: '/dialog',
-          component: () => import(/* webpackChunkName: "dragdialog" */ '../components/page/DragDialog.vue'),
-          meta: { title: '拖拽弹框', requireAuth: true }
-        },
-        {
-          // 国际化组件
-          path: '/i18n',
-          component: () => import(/* webpackChunkName: "i18n" */ '../components/page/I18n.vue'),
-          meta: { title: '国际化', requireAuth: true }
-        },
-        {
           // 权限页面
           path: '/permission',
           component: () => import(/* webpackChunkName: "permission" */ '../components/page/Permission.vue'),
@@ -109,7 +97,12 @@ export default new Router({
           path: '/userlist',
           component: () => import(/* webpackChunkName: "userlist" */ '../components/page/user/userlist.vue'),
           meta: { title: '用户管理', requireAuth: true }
-        }
+        },
+        {
+          path: '/usermaintain',
+          component: () => import(/* webpackChunkName: "form" */ '../components/page/user/usermaintain.vue'),
+          meta: { title: '个人信息维护', requireAuth: true }
+        },
       ]
     },
     {
