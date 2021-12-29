@@ -14,20 +14,11 @@
             <el-input v-model="form.logid" :disabled="true"></el-input>
           </el-form-item>
           <el-form-item label="头像">
-            <div class="crop-demo">
-              <img :src="cropImg" class="pre-img">
-              <div class="crop-demo-btn">选择图片
-                <input class="crop-input" type="file" name="image" accept="image/*" @change="setImage" />
-              </div>
-            </div>
-            <el-dialog title="裁剪图片" :visible.sync="dialogVisible" width="30%">
-              <vue-cropper ref='cropper' :src="imgSrc" :ready="cropImage" :zoom="cropImage" :cropmove="cropImage"
-                style="width:100%;height:300px;"></vue-cropper>
-              <span slot="footer" class="dialog-footer">
-                <el-button @click="cancelCrop">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-              </span>
-            </el-dialog>
+            <el-upload class="avatar-uploader" action="http://127.0.0.1:8081/user/uploadavatar" :show-file-list="false"
+              :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
           </el-form-item>
           <el-form-item label="昵称" prop="nickname">
             <el-input v-model="form.nickname" placeholder="请输入昵称"></el-input>
@@ -109,6 +100,7 @@ export default {
         nickname: '',
         password: '',
         age: '',
+        avatar: '',
         birthday: '',
         email: '',
         phone: '',
@@ -144,44 +136,13 @@ export default {
       },
       defaultSrc: require('../../../assets/img/img.jpg'),
       fileList: [],
-      imgSrc: '',
-      cropImg: '',
-      dialogVisible: false,
+      imageUrl: '',
       isShowTip: false
     };
   },
   methods: {
     onSubmit () {
       this.$message.success('提交成功！');
-    },
-    setImage (e) {
-      const file = e.target.files[0];
-      if (!file.type.includes('image/')) {
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        this.dialogVisible = true;
-        this.imgSrc = event.target.result;
-        this.$refs.cropper && this.$refs.cropper.replace(event.target.result);
-      };
-      reader.readAsDataURL(file);
-    },
-    cropImage () {
-      this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
-    },
-    cancelCrop () {
-      this.dialogVisible = false;
-      this.cropImg = this.defaultSrc;
-    },
-    imageuploaded (res) {
-      console.log(res)
-    },
-    handleError () {
-      this.$notify.error({
-        title: '上传失败',
-        message: '图片上传接口上传失败，可更改为自己的服务器接口'
-      });
     },
     //年龄联动
     onAgeChanged () {
@@ -202,6 +163,22 @@ export default {
         this.isShowTip = false;
       }
     },
+    handleAvatarSuccess (res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+      this.form.avatar = res.data;
+    },
+    beforeAvatarUpload (file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    }
   }
 };
 </script>
@@ -245,5 +222,28 @@ export default {
     top: 0;
     opacity: 0;
     cursor: pointer;
+}
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+    border-color: #409eff;
+}
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+}
+.avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
 }
 </style>
