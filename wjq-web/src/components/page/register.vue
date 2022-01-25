@@ -35,6 +35,7 @@
 <script>
 import { Message } from 'element-ui'
 import verifyPassWordTip from '../common/verifyPassWordTip.vue'
+import CaptchaMini from 'captcha-mini'; //引入验证码生成组件​
 export default {
   name: "VerifyPassWord",
   components: {

@@ -112,6 +112,12 @@ export default new Router({
       meta: { title: '登录' }
     },
     {
+      path: '/frontPage',
+      name: 'frontPage',
+      component: () => import(/* webpackChunkName: "login" */ '../components/page/main/about.vue'),
+      meta: { title: '首页' }
+    },
+    {
       path: '/register',
       component: () => import(/* webpackChunkName: "register" */ '../components/page/register.vue'),
       name: 'register',
